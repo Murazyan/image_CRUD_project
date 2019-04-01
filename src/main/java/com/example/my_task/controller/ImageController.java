@@ -117,18 +117,6 @@ public class ImageController {
 
     }
 
-//    @PostMapping("/addImages")
-//    public ResponseEntity changeImages(@RequestParam(name = "newPictures") List<MultipartFile> files,
-//                                       @RequestParam(name = "oldPicNames")List<String> oldPicNames) throws IOException {
-//        for (int i = 0; i < Math.min(files.size(), oldPicNames.size()); i++) {
-//            File file = new File(imageUploadDir+oldPicNames.get(i));
-//            file.delete();
-//            files.get(i).transferTo(new File(imageUploadDir+oldPicNames.get(i)));
-//        }
-//       return ResponseEntity.ok("Changed");
-//
-//    }
-
 
 
     @PostMapping("/addImages")
