@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0" name="viewport" />
+    <link href="application.css" rel="stylesheet" />
+    <script src="vendor.js"></script>
+    <script src="application.js"></script>
+    <script src="sendRequest.js"></script>
+    <script src="uploadImageGroup.js"></script>
+    <link href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  </head>
+  <body>
+    <div class="admin-container admin-container--flex">
+      <div class="content">
+        <form class="modeernation__wrapper">
+          <div class="modernation__wrapper_header">
+            <input class="moderation__wrapper_btn" type="submit" value="Сохранить" />
+          </div>
+          <div class="modernation__wrapper_tabs">
+            <div class="tabs__column">
+              <div class="tab">
+                <div class="tab_title">
+                  Фотографии
+                </div>
+                <div class="tab__wrapper tab__wrapper_photo">
+                  <div class="tab__wrapper_title tab__wrapper_title--photo">
+                    Фото для ретуши
+                  </div>
+                  <div class="required__photos" >
+                    <div class="required__photos_wrapper">
+                      <img th:if="${retushImageName.equals('1.jpg')}" class="photo-src" th:src="@{/image/(fileName=${retushImageName})}" />
+                      <div class="required__photo_select">
+                        <div class="required__photo_select--bg">
+                            <input type="hidden" th:value="${retushImageName}">
+
+                        </div>
+                        <div class="required__photo_select--input">
+                          <label class="inpt-cust"><input class="checkboxinpt" type="checkbox" /><span class="checkmark"></span></label>
+                        </div>
+                      </div>
+                      <div class="required__photos_menu--wrapper">
+                        <div class="required__photo_menu">
+                          <div class="required__photo_menu--bg"></div>
+                          <div class="required__photo_menu--items">
+                            <a class="required__photo_menu--item required__photo_menu--item-show" th:href="@{/image/(fileName=${retushImageName})}"></a>
+                          <a th:href="@{/image/(fileName=${retushImageName})}" th:download="${retushImageName}"> <div class="required__photo_menu--item required__photo_menu--item-load">
+
+                          </div></a>
+                            <input type="file" class="fileInput" style="display:none">
+                            <div class="required__photo_menu--item required__photo_menu--item-change my-class">
+                                <input  type="hidden" name="retushImageName" th:value="${retushImageName}"/>
+                            </div>
+                           <div  class="required__photo_menu--item required__photo_menu--item-delete" onclick="deleteImageByImageNmae(event)">
+                              <input  type="hidden" name="retushImageName" th:value="${retushImageName}"/>
+
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab__wrapper_title tab__wrapper_title--photo" data-featherlight-filter="a" data-featherlight-gallery="">
+                    Обязательные фото
+                  </div>
+                  <div class="required__photos connectedSortable" id="sortable1">
+                    <div class="required__photos_wrapper ui-state-default" th:each="reqImage:${requiredImageNames}">
+                      <!--<img class="photo-src" src="img/image.png" />-->
+                      <img class="photo-src"th:src="@{/image/(fileName=${reqImage})}" />
+                      <div class="required__photo_select">
+                        <div class="required__photo_select--bg">
+                            <input type="hidden" th:value="${reqImage}">
+                        </div>
+                        <div class="required__photo_select--input">
+                          <label class="inpt-cust"><input class="checkboxinpt" type="checkbox" /><span class="checkmark"></span></label>
+                        </div>
+                      </div>
+                      <div class="required__photos_menu--wrapper">
+                        <div class="required__photo_menu">
+                          <div class="required__photo_menu--bg"></div>
+                          <div class="required__photo_menu--items">
+                            <a class="required__photo_menu--item required__photo_menu--item-show" th:href="@{/image/(fileName=${reqImage})}"></a>
+                            <a th:href="@{/image/(fileName=${reqImage})}" th:download="${reqImage}">
+                            <div class="required__photo_menu--item required__photo_menu--item-load">
+                            </div></a>
+                            <input type="file" class="fileInput" style="display:none">
+
+                            <div class="required__photo_menu--item required__photo_menu--item-change  my-class">
+                              <input  type="hidden" name="retushImageName" th:value="${reqImage}"/>
+
+                            </div>
+                            <div class="required__photo_menu--item required__photo_menu--item-delete" onclick="deleteImageByImageNmae(event)">
+                                <input type="hidden" th:value="${reqImage}">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </div>
+                  <div class="tab__wrapper_title tab__wrapper_title--photo">
+                    Дополнительные фото
+                  </div>
+
+                  <div class="second__photos connectedSortable" id="sortable2">
+
+                    <div class="required__photos_wrapper ui-state-default" th:each="additionalImage:${additionalImagesNames}">
+                      <img class="photo-src" th:src="@{/image/(fileName=${additionalImage})}" />
+                      <div class="required__photo_select">
+                        <div class="required__photo_select--bg">
+                            <input type="hidden" th:value="${additionalImage}">
+
+                        </div>
+                        <div class="required__photo_select--input">
+                          <label class="inpt-cust"><input class="checkboxinpt" type="checkbox" /><span class="checkmark"></span></label>
+                        </div>
+                      </div>
+                      <div class="required__photos_menu--wrapper">
+                        <div class="required__photo_menu">
+                          <div class="required__photo_menu--bg"></div>
+                          <div class="required__photo_menu--items">
+                            <a class="required__photo_menu--item required__photo_menu--item-show" th:href="@{/image/(fileName=${additionalImage})}"></a>
+
+                           <a th:href="@{/image/(fileName=${additionalImage})}" th:download="${additionalImage}"> <div class="required__photo_menu--item required__photo_menu--item-load ">
+                            </div></a>
+                            <input type="file" class="fileInput" style="display:none">
+
+                            <div class="required__photo_menu--item required__photo_menu--item-change my-class">
+                              <input  type="hidden" name="retushImageName" th:value="${additionalImage}"/>
+
+                            </div>
+                            <div class="required__photo_menu--item required__photo_menu--item-delete" onclick="deleteImageByImageNmae(event)">
+                                <input type="hidden" th:value="${additionalImage}">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="photo__select_nav">
+                    <div class="photo__select">
+                      Выбрать фото
+                    </div>
+                    <div class="photoe__selct_items">
+                      <div class="photoe__selct_item photoe__selct_item--load load-group"></div>
+                        <input type="file" class="fileInput" style="display:none" multiple>
+                        <div class="photoe__selct_item photoe__selct_item--change upload-group"></div>
+                      <div class="photoe__selct_item photoe__selct_item--delete group-delete"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  <form action="/image/addImageMany" method="post" enctype="multipart/form-data">
+    <input type="file" name="pictures" multiple>
+    <input type="submit" value="bobo">
+  </form>
+  </body>
+</html>
